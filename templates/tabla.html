@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h4>Criterio de Búsqueda: </h4>
+<h5>Region: {{region}}</h5>
+<h5>Curso: {{curso}}</h5>
+<hr>
+
+<div class="tabla-datos mt-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Rut</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido Pat.</th>
+                <th scope="col">Apellido Mat.</th>
+                <th scope="col">Código curso</th>
+                <th scope="col">Descripción curso</th>
+                <th scope="col">Acción</th>
+            </tr>
+        </thead>
+
+        
+        <tbody>
+            <h4>{{mensaje}}</h4>
+            {% for item in estudiantes %}
+            <tr>
+                <td>{{item.rut}}</td>
+                <td>{{item.nombre}}</td>
+                <td>{{item.apellido_pat}}</td>
+                <td>{{item.apellido_mat}}</td>
+                <td>{{item.codigo_curso}}</td>
+                <td>{{item.codigo_curso__codigo_plan_formativo__descripcion}}</td>
+                <td>
+                    <form action="detalle/{{item.id_estudiante}}" method="GET">
+                      {% csrf_token %}
+                      <button class="btn btn-primary" type="submit" value="" name="detalle_id">Ver</button>
+                    </form>
+                </td>
+            </tr>
+            
+            {% endfor %}
+            
+        </tbody>
+    </table>
+</div>  
+{% endblock %}
