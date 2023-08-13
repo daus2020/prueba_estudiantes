@@ -20,7 +20,7 @@
             </tr>
         </thead>
 
-        
+
         <tbody>
             <h4>{{mensaje}}</h4>
             {% for item in estudiantes %}
@@ -33,15 +33,15 @@
                 <td>{{item.codigo_curso__codigo_plan_formativo__descripcion}}</td>
                 <td>
                     <form action="detalle/{{item.id_estudiante}}" method="GET">
-                      {% csrf_token %}
-                      <button class="btn btn-primary" type="submit" value="" name="detalle_id">Ver</button>
+                        {% csrf_token %}
+                        <button class="btn btn-primary" type="submit" value="" name="detalle_id">Ver</button>
                     </form>
                 </td>
             </tr>
-            
+
             {% endfor %}
-            
+
         </tbody>
     </table>
-</div>  
+</div>
 {% endblock %}

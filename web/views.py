@@ -46,8 +46,23 @@ def index(request):
         if len(datos) == 0:
             mensaje = "No existen estudiantes con el criterio de búsqueda seleccionado"
 
+        # if region_buscada.exists():
+        #     region_data = region_buscada[0]
+        #     region_name = region_data['nombre']
+        #     print(region_name)
+
+        if region_buscada:
+            region_selected = Region.objects.all(
+            )[int(region_buscada) - 1].nombre
+        else:
+            region_selected = ''
+        # region_selected = Region.objects.filter(
+        #     codigo_region=region_buscada).values('nombre')[0]
+        # codigo_region=region_buscada.values('nombre')
+        print(region_selected)
+
         context = {'estudiantes': datos, 'form': MainForm(
-        ), 'region': region_buscada, 'curso': curso_buscado, 'mensaje': mensaje}
+        ), 'region': region_selected, 'curso': curso_buscado, 'mensaje': mensaje}
 
     else:
         # aqui debe crearse instancia vacía del formulario

@@ -11,7 +11,8 @@ from django.db import models
 class Comuna(models.Model):
     codigo_comuna = models.IntegerField(primary_key=True)
     nombre = models.CharField(max_length=30, blank=True, null=True)
-    codigo_region = models.ForeignKey('Region', models.DO_NOTHING, db_column='codigo_region', blank=True, null=True)
+    codigo_region = models.ForeignKey(
+        'Region', models.DO_NOTHING, db_column='codigo_region', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -22,21 +23,27 @@ class Curso(models.Model):
     codigo_curso = models.CharField(primary_key=True, max_length=30)
     fecha_inicio = models.DateField(blank=True, null=True)
     fecha_termno = models.DateField(blank=True, null=True)
-    codigo_comuna = models.ForeignKey(Comuna, models.DO_NOTHING, db_column='codigo_comuna', blank=True, null=True)
-    codigo_plan_formativo = models.ForeignKey('PlanFormativo', models.DO_NOTHING, db_column='codigo_plan_formativo', blank=True, null=True)
+    codigo_comuna = models.ForeignKey(
+        Comuna, models.DO_NOTHING, db_column='codigo_comuna', blank=True, null=True)
+    codigo_plan_formativo = models.ForeignKey(
+        'PlanFormativo', models.DO_NOTHING, db_column='codigo_plan_formativo', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'curso'
-    
+
     def __str__(self):
         return str(self.codigo_curso)
 
 
 class CursoModuloTutor(models.Model):
-    codigo_curso = models.OneToOneField(Curso, models.DO_NOTHING, db_column='codigo_curso', primary_key=True)  # The composite primary key (codigo_curso, codigo_modulo, codigo_tutor) found, that is not supported. The first column is selected.
-    codigo_modulo = models.ForeignKey('Modulo', models.DO_NOTHING, db_column='codigo_modulo')
-    codigo_tutor = models.ForeignKey('Tutor', models.DO_NOTHING, db_column='codigo_tutor')
+    # The composite primary key (codigo_curso, codigo_modulo, codigo_tutor) found, that is not supported. The first column is selected.
+    codigo_curso = models.OneToOneField(
+        Curso, models.DO_NOTHING, db_column='codigo_curso', primary_key=True)
+    codigo_modulo = models.ForeignKey(
+        'Modulo', models.DO_NOTHING, db_column='codigo_modulo')
+    codigo_tutor = models.ForeignKey(
+        'Tutor', models.DO_NOTHING, db_column='codigo_tutor')
 
     class Meta:
         managed = False
@@ -51,8 +58,10 @@ class Estudiante(models.Model):
     apellido_pat = models.CharField(max_length=30, blank=True, null=True)
     apellido_mat = models.CharField(max_length=30, blank=True, null=True)
     direccion = models.CharField(max_length=100, blank=True, null=True)
-    codigo_comuna = models.ForeignKey(Comuna, models.DO_NOTHING, db_column='codigo_comuna', blank=True, null=True)
-    codigo_curso = models.ForeignKey(Curso, models.DO_NOTHING, db_column='codigo_curso', blank=True, null=True)
+    codigo_comuna = models.ForeignKey(
+        Comuna, models.DO_NOTHING, db_column='codigo_comuna', blank=True, null=True)
+    codigo_curso = models.ForeignKey(
+        Curso, models.DO_NOTHING, db_column='codigo_curso', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -80,8 +89,11 @@ class PlanFormativo(models.Model):
 
 
 class PlanModulo(models.Model):
-    codigo_plan_formativo = models.OneToOneField(PlanFormativo, models.DO_NOTHING, db_column='codigo_plan_formativo', primary_key=True)  # The composite primary key (codigo_plan_formativo, codigo_modulo) found, that is not supported. The first column is selected.
-    codigo_modulo = models.ForeignKey(Modulo, models.DO_NOTHING, db_column='codigo_modulo')
+    # The composite primary key (codigo_plan_formativo, codigo_modulo) found, that is not supported. The first column is selected.
+    codigo_plan_formativo = models.OneToOneField(
+        PlanFormativo, models.DO_NOTHING, db_column='codigo_plan_formativo', primary_key=True)
+    codigo_modulo = models.ForeignKey(
+        Modulo, models.DO_NOTHING, db_column='codigo_modulo')
 
     class Meta:
         managed = False
@@ -96,9 +108,9 @@ class Region(models.Model):
     class Meta:
         managed = False
         db_table = 'region'
-    
+
     def __str__(self):
-        return str(self.nombre)
+        return self.nombre
 
 
 class Tutor(models.Model):
@@ -109,7 +121,8 @@ class Tutor(models.Model):
     apellido_mat = models.CharField(max_length=30, blank=True, null=True)
     direccion = models.CharField(max_length=100, blank=True, null=True)
     cargo = models.CharField(max_length=20, blank=True, null=True)
-    codigo_comuna = models.ForeignKey(Comuna, models.DO_NOTHING, db_column='codigo_comuna', blank=True, null=True)
+    codigo_comuna = models.ForeignKey(
+        Comuna, models.DO_NOTHING, db_column='codigo_comuna', blank=True, null=True)
 
     class Meta:
         managed = False
