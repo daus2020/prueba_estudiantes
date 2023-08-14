@@ -5,6 +5,21 @@ from web.models import *
 
 
 class MainForm(forms.Form):
+    region_selector = forms.ModelChoiceField(
+        queryset=Region.objects.all().order_by('codigo_region'),
+        label="Región", widget=forms.Select(attrs={'class': 'form-select'}),
+        required=False, empty_label="Elija una región"
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['region_selector'].label_from_instance = self.label_from_instance
+
+    def label_from_instance(self, obj):
+        return obj.nombre
+
+    curso_selector = forms.ModelChoiceField(queryset=Curso.objects.all().order_by('codigo_curso'), to_field_name='codigo_curso',
+                                            label="Curso", widget=forms.Select(attrs={'class': 'form-select'}), required=False, empty_label="Elija un curso")
     # region_selector = forms.ModelChoiceField(queryset=Region.objects.all().order_by('nombre'), to_field_name='codigo_region',
     #                                          label="Región", widget=forms.Select(attrs={'class': 'form-select'}), required=False, empty_label="Elija una región")
 
@@ -26,9 +41,6 @@ class MainForm(forms.Form):
     #     attrs={'class': 'form-control'}),
     # )
 
-    curso_selector = forms.ModelChoiceField(queryset=Curso.objects.all().order_by('codigo_curso'), to_field_name='codigo_curso',
-                                            label="Curso", widget=forms.Select(attrs={'class': 'form-select'}), required=False, empty_label="Elija un curso")
-
     # class CustomModelChoiceField(forms.ModelChoiceField):
     #     def label_from_instance(self, obj):
     #         return obj.nombre
@@ -43,15 +55,3 @@ class MainForm(forms.Form):
 #                                              label="Región", widget=forms.Select(attrs={'class': 'form-select'}), required=False, empty_label="Elija una región")
 
 #    genero = forms.ChoiceField(choices = sex, label="Gender", widget=forms.Select(attrs={'class':'form-select'}), required=False)
-    region_selector = forms.ModelChoiceField(
-        queryset=Region.objects.all().order_by('codigo_region'),
-        widget=forms.Select(attrs={'class': 'form-control'}),
-        required=False, empty_label="Elija una región"
-    )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['region_selector'].label_from_instance = self.label_from_instance
-
-    def label_from_instance(self, obj):
-        return obj.nombre

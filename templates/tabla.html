@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h4>Criterio de Búsqueda: </h4>
-<h5>Region: {{region}}</h5>
-<h5>Curso: {{curso}}</h5>
+<h5>Criterios de Búsqueda</h5>
+<p>Región: {{region}}</p>
+{% if curso %}
+<p>Curso: {{curso}}</p>
+{% else %}
+<!-- # harcoded because of variable type, number not str -->
+<p>Curso: sin filtro aplicado</p>
+{% endif %}
 <hr>
 
+<!-- if data is not empty then render the table -->
+{% if not message %}
 <div class="tabla-datos mt-5">
     <table class="table">
         <thead>
@@ -20,7 +27,6 @@
             </tr>
         </thead>
 
-
         <tbody>
             <h4>{{mensaje}}</h4>
             {% for item in estudiantes %}
@@ -31,12 +37,12 @@
                 <td>{{item.apellido_mat}}</td>
                 <td>{{item.codigo_curso}}</td>
                 <td>{{item.codigo_curso__codigo_plan_formativo__descripcion}}</td>
-                <td>
+                <!-- <td>
                     <form action="detalle/{{item.id_estudiante}}" method="GET">
                         {% csrf_token %}
                         <button class="btn btn-primary" type="submit" value="" name="detalle_id">Ver</button>
                     </form>
-                </td>
+                </td> -->
             </tr>
 
             {% endfor %}
@@ -44,4 +50,9 @@
         </tbody>
     </table>
 </div>
+{% else %}
+<h4>{{mensaje}}</h4>
+{% endif %}
+
+
 {% endblock %}
