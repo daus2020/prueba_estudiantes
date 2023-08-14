@@ -6,37 +6,34 @@
 {% if curso %}
 <p>Curso: {{curso}}</p>
 {% else %}
-<!-- # harcoded because of variable type, number not str -->
+<!-- # harcoded because of variable type, it's a number not a str -->
 <p>Curso: sin filtro aplicado</p>
 {% endif %}
-<hr>
 
 <!-- if data is not empty then render the table -->
 {% if not message %}
 <div class="tabla-datos mt-5">
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
-                <th scope="col">Rut</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido Pat.</th>
-                <th scope="col">Apellido Mat.</th>
-                <th scope="col">Código curso</th>
-                <th scope="col">Descripción curso</th>
-                <th scope="col">Acción</th>
+                <th scope="col" class="text-center">Rut</th>
+                <th scope="col" class="text-center">Nombre</th>
+                <th scope="col" class="text-center">Apellido Pat.</th>
+                <th scope="col" class="text-center">Apellido Mat.</th>
+                <th scope="col" class="text-center">Código curso</th>
+                <th scope="col" class="text-center">Descripción curso</th>
             </tr>
         </thead>
 
         <tbody>
-            <h4>{{mensaje}}</h4>
             {% for item in estudiantes %}
             <tr>
-                <td>{{item.rut}}</td>
-                <td>{{item.nombre}}</td>
-                <td>{{item.apellido_pat}}</td>
-                <td>{{item.apellido_mat}}</td>
-                <td>{{item.codigo_curso}}</td>
-                <td>{{item.codigo_curso__codigo_plan_formativo__descripcion}}</td>
+                <td class="text-center">{{item.rut}}</td>
+                <td class="text-center">{{item.nombre}}</td>
+                <td class="text-center">{{item.apellido_pat}}</td>
+                <td class="text-center">{{item.apellido_mat}}</td>
+                <td class="text-center">{{item.codigo_curso}}</td>
+                <td class="text-center">{{item.codigo_curso__codigo_plan_formativo__descripcion}}</td>
                 <!-- <td>
                     <form action="detalle/{{item.id_estudiante}}" method="GET">
                         {% csrf_token %}
