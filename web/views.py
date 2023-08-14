@@ -68,9 +68,10 @@ def listarView(request):
                 curso_selected = int(curso_selected)
                 print('52-')
             except (ValueError, TypeError):
-                curso_selected = None
-                message = 'sin filtro aplicado'
-                print('56-')
+                pass
+                # curso_selected = None
+                # message = 'sin filtro aplicado'
+                # print('56-')
 
         context = {
             'estudiantes': data,
@@ -114,7 +115,7 @@ def listarView(request):
         context = {'estudiantes': data, 'form': form}
 
     print(context)
-    return render(request, 'tabla.html', context)
+    return render(request, 'form.html', context)
 
 
 def registroView(request):

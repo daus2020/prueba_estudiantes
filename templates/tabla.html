@@ -1,6 +1,3 @@
-{% extends 'base.html' %}
-{% block content %}
-
 <h5>Criterios de Búsqueda</h5>
 <p>Región: {{region}}</p>
 {% if curso %}
@@ -13,7 +10,7 @@
 <!-- if data is not empty then render the table -->
 {% if not message %}
 <div class="tabla-datos mt-5">
-    <table class="table table-hover">
+    <table class="table table-hover overflow-scroll">
         <thead>
             <tr>
                 <th scope="col" class="text-center">Rut</th>
@@ -50,6 +47,3 @@
 {% else %}
 <h4>{{mensaje}}</h4>
 {% endif %}
-
-
-{% endblock %}

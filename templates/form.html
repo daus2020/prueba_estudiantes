@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<form action="" method="POST" class="py-3 px-4 d-flex">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="div-field px-2">
+        <label class="form-label my-0">{{ field.label }}</label>
+        {{ field }}
+    </div>
+    {% endfor %}
+    <button class="btn btn-primary px-2" style="width: 400px" type="submit"><i class="fa-solid fa-filter"></i>
+        Filtrar
+    </button>
+</form>
+
+{% include 'tabla.html' %}
+
+{% endblock %}
