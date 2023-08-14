@@ -15,26 +15,31 @@ def index(request):
         message = ''
 
         estudiantes = Estudiante.objects.select_related(
-            'codigo_curso__codigo_plan_formativo').all()
+            'codigo_comuna__codigo_region').all()
+        # estudiantes = Estudiante.objects.select_related(
+        #     'codigo_curso__codigo_plan_formativo').all()
 
-        print(estudiantes)
-        for item in estudiantes:
-            # for estudiante in estudiantes:
-            # nombre_estudiante = estudiante.nombre
-            # codigo_curso = estudiante.codigo_curso.codigo_curso
-            # descripcion_plan_formativo = estudiante.codigo_curso.codigo_plan_formativo.descripcion
+        # print(estudiantes)
+        # for estudiante in estudiantes:
+        #     nombre_estudiante = estudiante.nombre
+        # codigo_curso = estudiante.codigo_curso.codigo_curso
+        # codigo_curso = estudiante.codigo_curso
+        # descripcion_plan_formativo = estudiante.codigo_curso.codigo_plan_formativo.descripcion
 
-            print(item.nombre)
-            print(item.codigo_curso.codigo_curso)
-            # print(item.codigo_curso.codigo_curso.codigo_curso)
-            print(item.codigo_curso.codigo_plan_formativo.descripcion)
-            # print(nombre_estudiante)
-            # print(codigo_curso)
-            # print(descripcion_plan_formativo)
+        # for item in estudiantes:
+        #     print(item.nombre)
+        #     print(item.codigo_curso.codigo_curso)
+        #     # print(item.codigo_curso.codigo_curso.codigo_curso)
+        #     print(item.codigo_curso.codigo_plan_formativo.descripcion)
+        # print(nombre_estudiante)
+        # print(codigo_curso)
+        # print(descripcion_plan_formativo)
 
         if region_selected != '':
-            data = Estudiante.objects.filter(codigo_comuna__codigo_region=region_selected).values('id_estudiante', 'rut', 'nombre', 'apellido_pat', 'apellido_mat',
-                                                                                                  'codigo_curso', 'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
+            data = estudiantes.filter(codigo_comuna__codigo_region=region_selected).values('id_estudiante', 'rut', 'nombre', 'apellido_pat', 'apellido_mat',
+                                                                                           'codigo_curso', 'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
+            # data = Estudiante.objects.filter(codigo_comuna__codigo_region=region_selected).values('id_estudiante', 'rut', 'nombre', 'apellido_pat', 'apellido_mat',
+            #                                                                                       'codigo_curso', 'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
 
         if curso_selected != '' and region_selected == '':
             data = Estudiante.objects.filter(codigo_curso=curso_selected).values('id_estudiante', 'rut', 'nombre', 'apellido_pat', 'apellido_mat',
@@ -56,15 +61,50 @@ def index(request):
         #     region_name = region_data['nombre']
         #     print(region_name)
 
-        if region_selected:
-            region_selected = Region.objects.all(
-            )[int(region_selected) - 1].nombre
-        else:
+        # try:
+        #     region_selected = Region.objects.get(
+        #         codigo_region=int(region_selected.nombre))
+        # except Region.DoesNotExist:
+        #     # Handle the case where the specified region does not exist
+        #     region_selected = 'sin filtro aplicado'
+        # pass
+        # try:
+        #     region_selected = Region.objects.get(
+        #         codigo_region=int(region_selected))
+        # except Region.DoesNotExist:
+        #     region_selected = None
+        # try:
+        #     region_selected = Region.objects.get(
+        #         codigo_region=[int(region_selected) - 1].nombre)
+        # except Region.DoesNotExist:
+        #     region_selected = 'sin filtro aplicado'
+
+        # try:
+        #     region_selected = Region.objects.get(
+        #         codigo_region=int(region_selected))
+        #     region_nombre = region_selected.nombre
+        # except Region.DoesNotExist:
+            # Handle the case where the specified region does not exist
+            # region_nombre = 'sin filtro aplicado'
+
+        # if region_selected:
+        #     region_selected = Region.objects.all(
+        #     )[int(region_selected) - 1].nombre
+        #     # region_selected = Region.objects.all(
+        #     # )[int(region_selected) - 1].nombre
+        # else:
+        #     region_selected = 'sin filtro aplicado'
+        # # region_selected = Region.objects.filter(
+        # #     codigo_region=region_selected).values('nombre')[0]
+        # # codigo_region=region_selected.values('nombre')
+        # print(region_selected)
+
+        try:
+            region_selected_obj = Region.objects.get(
+                codigo_region=int(region_selected))
+            region_selected = region_selected_obj.nombre
+        except (ValueError, Region.DoesNotExist):
             region_selected = 'sin filtro aplicado'
-        # region_selected = Region.objects.filter(
-        #     codigo_region=region_selected).values('nombre')[0]
-        # codigo_region=region_selected.values('nombre')
-        print(region_selected)
 
         context = {'estudiantes': data, 'form': MainForm(
         ), 'region': region_selected, 'curso': curso_selected, 'message': message}
