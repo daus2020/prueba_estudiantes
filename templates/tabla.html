@@ -33,10 +33,15 @@
                 <td class="text-center">{{item.codigo_curso}}</td>
                 <td class="text-center">{{item.codigo_curso__codigo_plan_formativo__descripcion}}</td>
                 <td>
-                    <form action="detalle/{{item.rut}}" method="GET">
+                    <form action="{% url 'detalle' item.rut %}" method="GET">
                         {% csrf_token %}
-                        <button class="btn btn-primary" type="submit" value="item.rut" name="detalle_id">Ver</button>
+                        <button class="btn btn-primary" type="submit" name="detalle_id">Ver</button>
                     </form>
+                    <!-- <form action="detalle/{{item.rut}}" method="GET">
+                        {% csrf_token %}
+                        <button class="btn btn-primary" type="submit" value={{"item.rut"}}
+                            name="detalle_id">Ver</button>
+                    </form> -->
                 </td>
             </tr>
 

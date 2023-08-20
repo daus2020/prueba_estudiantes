@@ -3,18 +3,24 @@
 
 {% block content %}
 <div class="card text-bg-dark mb-3" style="max-width: 18rem;">
-    <div class="card-header">Detalles Estudiante</div>
+    <div class="card-header">Estudiante</div>
     <div class="card-body">
-        <h5 class="card-title">Detalles</h5>
-        <p class="card-text">Rut: {{ id }}</p>
-        <p class="card-text">Nombre: {{ estudiante.nombre }}</p>
-        <p class="card-text">Apellido paterno: {{ estudiante.apellido_pat }}</p>
-        <p class="card-text">Apellido paterno: {{ estudiante.apellido_mat }}</p>
-        <!-- <p class="card-text">Direccion: {{ estudiante.direccion }}</p>
-        <p class="card-text">Fecha inicio: {{ estudiante.codigo_curso__fecha_incio }}</p> -->
-        <p class="card-text">Descripción: {{ estudiante.codigo_curso__codigo_plan_formativo__descripcion }}</p>
+        <h5 class="card-title">Detalles Estudiante</h5>
+        <p class="card-text">
+        <ul class="list-unstyled">
+            <li class="card-text text-dark">Rut: {{ id }}</li>
+            <li class="card-text text-dark">Nombre: {{ estudiante.nombre }}</li>
+            <li class="card-text text-dark">Apellido paterno: {{ estudiante.apellido_pat }}</li>
+            <li class="card-text text-dark">Apellido paterno: {{ estudiante.apellido_mat }}</li>
+            <!-- <p class="card-text">Direccion: {{ estudiante.direccion }}</p>
+                    <p class="card-text">Fecha inicio: {{ estudiante.codigo_curso__fecha_incio }}</p> -->
+            <li class="card-text text-dark">Descripción: </li>
+        </ul>
+        </p>
+        <!-- <p class="card-text">Descripción: {{ estudiante.curso__codigo_plan_formativo__descripcion }}</p> -->
+        <!-- <p class="card-text">Descripción: {{ estudiante.codigo_curso__codigo_plan_formativo__descripcion }}</p> -->
         <!-- <p class="card-text">Duracion hr.: {{ estudiante.codigo_curso__codigo_plan_formativo__duracion_horas }}</p> -->
-        <a href="#" class="btn btn-primary">Volver al listado</a>
+        <a href="{% url 'listar' %}" class="btn btn-primary">Volver al listado</a>
     </div>
 </div>
 {% endblock %}

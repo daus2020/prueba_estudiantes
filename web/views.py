@@ -34,23 +34,25 @@ def listarView(request):
         # estudiantes = Estudiante.objects.select_related(
         #     'codigo_comuna__codigo_region').all()
 
-        if region_selected != '':
+        if region_selected != '' and curso_selected == '':
             # data = estudiantes.filter(codigo_comuna__codigo_region=region_selected).values('id_estudiante', 'rut', 'nombre', 'apellido_pat', 'apellido_mat',
             #                                                                                'codigo_curso', 'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
             data = Estudiante.objects.filter(codigo_comuna__codigo_region=region_selected).values('id_estudiante', 'rut', 'nombre', 'apellido_pat', 'apellido_mat',
                                                                                                   'codigo_curso', 'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
 
-        if curso_selected != '' and region_selected == '':
+        elif curso_selected != '' and region_selected == '':
             data = Estudiante.objects.filter(codigo_curso=curso_selected).values('id_estudiante', 'rut', 'nombre', 'apellido_pat', 'apellido_mat',
                                                                                  'codigo_curso', 'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
 
-        if curso_selected != '' and region_selected != '':
+        elif curso_selected != '' and region_selected != '':
             data = Estudiante.objects.filter(codigo_comuna__codigo_region=region_selected, codigo_curso=curso_selected).values('id_estudiante', 'rut', 'nombre', 'apellido_pat',
                                                                                                                                'apellido_mat', 'codigo_curso', 'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
 
-        if curso_selected == '' and region_selected == '':
+        # if curso_selected == '' and region_selected == '':
+        else:
             data = Estudiante.objects.filter().values('id_estudiante', 'rut', 'nombre', 'apellido_pat', 'apellido_mat', 'codigo_curso',
                                                       'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
+            print('else 55')
 
         if len(data) == 0:
             message = "No existen órdenes con el criterio de búsqueda seleccionado"
@@ -66,7 +68,7 @@ def listarView(request):
         if curso_selected is not None:
             try:
                 curso_selected = int(curso_selected)
-                print('52-')
+                print('69-')
             except (ValueError, TypeError):
                 pass
                 # curso_selected = None
@@ -111,10 +113,16 @@ def listarView(request):
         # ), 'region': region_selected, 'curso': curso_selected, 'message': message}
 
     else:
-        # aqui debe crearse instancia vacía del formulario
         form = MainForm()
-        data = []
-        context = {'estudiantes': data, 'form': form}
+        data = Estudiante.objects.filter().values('id_estudiante', 'rut', 'nombre', 'apellido_pat', 'apellido_mat', 'codigo_curso',
+                                                  'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
+        total = len(data)
+        context = {'estudiantes': data, 'form': form, 'total': total}
+        # aqui debe crearse instancia vacía del formulario
+        # form = MainForm()
+        # data = []
+        # context = {'estudiantes': data, 'form': form}
+        print('ELSE 125')
 
     print(context)
 
@@ -170,8 +178,12 @@ def logoutView(request):
 
 
 def detalleView(request, pk):
-    detalle = Estudiante.objects.filter(rut=pk).values(
-        'rut', 'nombre', 'apellido_pat', 'apellido_mat', 'codigo_curso__codigo_plan_formativo__descripcion')
-    print(detalle)
+    details = Estudiante.objects.filter(rut=pk).values(
+        'rut', 'nombre', 'apellido_pat', 'apellido_mat')
+    # 'rut', 'nombre', 'apellido_pat', 'apellido_mat', 'curso__codigo_plan_formativo__descripcion')
+    # 'rut', 'nombre', 'apellido_pat', 'apellido_mat', 'codigo_curso__codigo_plan_formativo__descripcion')
+    print('details: ')
+    print(details[0])
+    print('------------')
 
-    return render(request, 'detalle.html', {'estudiante': detalle[0], 'id': pk})
+    return render(request, 'detalle.html', {'estudiante': details[0], 'id': pk})
