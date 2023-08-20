@@ -8,6 +8,7 @@
 {% endif %}
 
 <!-- if data is not empty then render the table -->
+<p>Total: {{total}}</p>
 {% if not message %}
 <div class="tabla-datos mt-5">
     <table class="table table-hover overflow-scroll">
@@ -31,12 +32,12 @@
                 <td class="text-center">{{item.apellido_mat}}</td>
                 <td class="text-center">{{item.codigo_curso}}</td>
                 <td class="text-center">{{item.codigo_curso__codigo_plan_formativo__descripcion}}</td>
-                <!-- <td>
-                    <form action="detalle/{{item.id_estudiante}}" method="GET">
+                <td>
+                    <form action="detalle/{{item.rut}}" method="GET">
                         {% csrf_token %}
-                        <button class="btn btn-primary" type="submit" value="" name="detalle_id">Ver</button>
+                        <button class="btn btn-primary" type="submit" value="item.rut" name="detalle_id">Ver</button>
                     </form>
-                </td> -->
+                </td>
             </tr>
 
             {% endfor %}

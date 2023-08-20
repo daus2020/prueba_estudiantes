@@ -53,7 +53,7 @@ def listarView(request):
                                                       'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
 
         if len(data) == 0:
-            message = "No existen estudiantes con el criterio de búsqueda seleccionado"
+            message = "No existen órdenes con el criterio de búsqueda seleccionado"
 
         try:
             region_selected_obj = Region.objects.get(
@@ -72,13 +72,15 @@ def listarView(request):
                 # curso_selected = None
                 # message = 'sin filtro aplicado'
                 # print('56-')
+        total = len(data)
 
         context = {
             'estudiantes': data,
             'form': MainForm(),
             'region': region_selected,
             'curso': curso_selected if curso_selected is not None else 'sin filtro aplicado',
-            'message': message
+            'message': message,
+            'total': total,
             # 'message': message if 'message' in locals() else None
         }
 
@@ -115,6 +117,7 @@ def listarView(request):
         context = {'estudiantes': data, 'form': form}
 
     print(context)
+
     return render(request, 'form.html', context)
 
 
@@ -164,3 +167,11 @@ def logoutView(request):
     logout(request)
     messages.info(request, "Sesión cerrada exitosamente.")
     return HttpResponseRedirect('/')
+
+
+def detalleView(request, pk):
+    detalle = Estudiante.objects.filter(rut=pk).values(
+        'rut', 'nombre', 'apellido_pat', 'apellido_mat', 'codigo_curso__codigo_plan_formativo__descripcion')
+    print(detalle)
+
+    return render(request, 'detalle.html', {'estudiante': detalle[0], 'id': pk})

@@ -13,13 +13,13 @@
         {% bootstrap_messages %}
 
         <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/dj_ico.ico' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Cantarell:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
             integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
         <style>
             body {
@@ -39,6 +39,16 @@
                 color: #f7920d !important;
             }
 
+            #watermark {
+                /* top: 42%; */
+                /* left: calc(50% - 50px); */
+                left: calc(50% - 145px);
+                position: fixed;
+                z-index: 10;
+                opacity: 10%;
+                filter: grayscale(100%);
+            }
+
             /* @media only screen and (min-height: 590px) {
                 body {
                     overflow-x: hidden;
@@ -56,9 +66,8 @@
 
     <body class="d-flex flex-column vh-100">
 
-        {% block nav %}
+
         {% include "menu.html" %}
-        {% endblock nav %}
 
         <img src="{% static 'images/estudiantes_logo.png' %}" alt="dj_cars watermark logo" id="watermark">
         <div class="mt-4 container">
