@@ -34,6 +34,7 @@
                 font-family: Cantarell, sans-serif;
             }
 
+            h5,
             h2,
             th {
                 color: #f7920d !important;
@@ -47,6 +48,30 @@
                 z-index: 10;
                 opacity: 10%;
                 filter: grayscale(100%);
+            }
+
+            .card {
+                background-color: #24242471 !important;
+                /* background-color: rgba(0, 0, 0, 0.85) !important; */
+                box-shadow: inset 1px 1px 22px 4px rgba(0, 0, 0, 0.85);
+                border-radius: 10px;
+                min-width: 500px;
+            }
+
+            select:hover option {
+                background-color: #00ffe5d8;
+                /* background-color: #ff4d00d8; */
+                /* Your desired hover background color */
+            }
+
+            select:focus option {
+                background-color: #ff990084;
+                /* Your desired hover background color */
+            }
+
+            select option:checked {
+                background-color: #f7920d;
+                /* Your desired active background color */
             }
 
             /* @media only screen and (min-height: 590px) {

@@ -1,11 +1,7 @@
 <h5>Criterios de Búsqueda</h5>
 <p>Región: {{region}}</p>
-{% if curso %}
 <p>Curso: {{curso}}</p>
-{% else %}
-<!-- # harcoded because of variable type, it's a number not a str -->
-<p>Curso: sin filtro aplicado</p>
-{% endif %}
+
 
 <!-- if data is not empty then render the table -->
 <p>Total: {{total}}</p>

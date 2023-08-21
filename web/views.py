@@ -39,6 +39,7 @@ def listarView(request):
             #                                                                                'codigo_curso', 'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
             data = Estudiante.objects.filter(codigo_comuna__codigo_region=region_selected).values('id_estudiante', 'rut', 'nombre', 'apellido_pat', 'apellido_mat',
                                                                                                   'codigo_curso', 'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
+            curso_selected = 'sin filtro aplicado'
 
         elif curso_selected != '' and region_selected == '':
             data = Estudiante.objects.filter(codigo_curso=curso_selected).values('id_estudiante', 'rut', 'nombre', 'apellido_pat', 'apellido_mat',
@@ -52,10 +53,11 @@ def listarView(request):
         else:
             data = Estudiante.objects.filter().values('id_estudiante', 'rut', 'nombre', 'apellido_pat', 'apellido_mat', 'codigo_curso',
                                                       'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
-            print('else 55')
+            curso_selected = 'sin filtro aplicado'
+            print('else 53')
 
         if len(data) == 0:
-            message = "No existen órdenes con el criterio de búsqueda seleccionado"
+            message = "No existen estudiantes con el criterio de búsqueda seleccionado"
 
         try:
             region_selected_obj = Region.objects.get(
@@ -114,15 +116,26 @@ def listarView(request):
 
     else:
         form = MainForm()
+
         data = Estudiante.objects.filter().values('id_estudiante', 'rut', 'nombre', 'apellido_pat', 'apellido_mat', 'codigo_curso',
                                                   'codigo_curso__codigo_plan_formativo__descripcion', 'codigo_comuna__nombre', 'codigo_comuna__codigo_region__nombre')
         total = len(data)
-        context = {'estudiantes': data, 'form': form, 'total': total}
+
+        region_selected = 'sin filtro aplicado'
+        curso_selected = 'sin filtro aplicado'
+
+        context = {
+            'estudiantes': data,
+            'form': form,
+            'region': region_selected,
+            'curso': region_selected,
+            'total': total
+        }
         # aqui debe crearse instancia vacía del formulario
         # form = MainForm()
         # data = []
         # context = {'estudiantes': data, 'form': form}
-        print('ELSE 125')
+        print('ELSE 115')
 
     print(context)
 
@@ -178,12 +191,28 @@ def logoutView(request):
 
 
 def detalleView(request, pk):
-    details = Estudiante.objects.filter(rut=pk).values(
-        'rut', 'nombre', 'apellido_pat', 'apellido_mat')
-    # 'rut', 'nombre', 'apellido_pat', 'apellido_mat', 'curso__codigo_plan_formativo__descripcion')
-    # 'rut', 'nombre', 'apellido_pat', 'apellido_mat', 'codigo_curso__codigo_plan_formativo__descripcion')
-    print('details: ')
-    print(details[0])
+    estudiante = Estudiante.objects.select_related('codigo_curso__codigo_plan_formativo').filter(
+        rut=pk).values('nombre', 'apellido_pat', 'apellido_mat', 'codigo_curso')
+    # codigo_curso = estudiante.codigo_curso
+    descripcion = Estudiante.objects.select_related('codigo_curso__codigo_plan_formativo').filter(
+        rut=pk).values('codigo_curso__codigo_plan_formativo__descripcion')
+
+    context = {
+        'id': pk,
+        'estudiante': estudiante[0],
+        'descripcion': descripcion[0]['codigo_curso__codigo_plan_formativo__descripcion'],
+    }
+    #     'rut', 'nombre', 'apellido_pat', 'apellido_mat', 'codigo_curso__codigo_plan_formativo__descripcion')
+    # # description = Estudiante.objects.filter(rut=pk).values(
+    # #     'details.codigo_curso__codigo_plan_formativo__descripcion')
+    # # 'rut', 'nombre', 'apellido_pat', 'apellido_mat', 'curso__codigo_plan_formativo__descripcion')
+    # # 'rut', 'nombre', 'apellido_pat', 'apellido_mat', 'codigo_curso__codigo_plan_formativo__descripcion')
+    # print('details: ', details[0])
+    # # print('description: ', description[0])
+    # print('------------')
+    print('estudiante: ', estudiante[0])
+    print('description: ', descripcion[0])
     print('------------')
 
-    return render(request, 'detalle.html', {'estudiante': details[0], 'id': pk})
+    return render(request, 'detalle.html', context)
+    # return render(request, 'detalle.html', {'estudiante': details[0], 'id': pk, 'description': description[0]})

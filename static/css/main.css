@@ -47,7 +47,7 @@ b {
 }
 
 /* .card { */
-.table {
+.table, .card {
   background-color: #24242471 !important;
   /* background-color: rgba(0, 0, 0, 0.85) !important; */
   box-shadow: inset 1px 1px 22px 4px rgba(0, 0, 0, 0.85);
@@ -58,7 +58,7 @@ h2, th {
   /* color: #f7920d; */
 }
 
-.forms {
+.forms, .card {
   min-width: 400px;
   max-width: 25em;
   padding: 1.3em;
@@ -160,7 +160,7 @@ option:hover {
   text-align: center;
 }
 
-.table {
+.table, .card {
   /* border-color: #0ff42a71; */
   border-color: hsla(0, 0%, 14%, 0.443);
   border-radius: 10px;
