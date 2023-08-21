@@ -1,0 +1,61 @@
+<!-- {% load static %} -->
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top mb-2 vw-100">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}"><span><img class="me-1"
+                    src="{% static 'images/estudiantes_logo.png' %}" alt="logo dj cars" width="120"></span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if navbar == 'index' %} active {% endif %}" aria-current="page"
+                        href="{% url 'index' %}"><i class="fa-solid fa-house-chimney-window"></i> Inicio</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {% if navbar == 'lista' %} active {% endif %}" href="{% url 'listar' %}"><i
+                            class="fa-solid fa-table-list"></i> Listar</a>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav  d-flex me-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"
+                            style="color: #ff0000a5;"></i> Salir</a>
+                </li>
+                <li>
+                    <p class="nav-link"> <i class="fa-solid fa-user" style="color: #44ff008f;"></i> {{ user.username }}
+                    </p>
+                </li>
+            </ul>
+            {% else %}
+            <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0"> -->
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'index' %}"><i
+                            class="fa-solid fa-house-chimney"></i> Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}"><i class="fa-solid fa-list"></i> Listar</a>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav  d-flex me-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'registro' %}"><i class="fa-regular fa-address-card"></i>
+                        Registro</a>
+                </li>
+                <li class=" nav-item">
+                    <a class="nav-link" href="{% url 'login' %}"><i
+                            class="fa-solid fa-arrow-right-to-bracket fa-fade"></i> Login</a>
+                </li>
+            </ul>
+
+            {% endif %}
+        </div>
+    </div>
+</nav>

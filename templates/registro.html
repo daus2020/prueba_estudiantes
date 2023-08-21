@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+<!-- {% load static %} -->
+
+<!-- {% block nav %}
+{% include "menu.html" %}
+{% endblock nav %} -->
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="container forms py-3">
+    <h2 class="text-center">Registro</h2>
+    <form method="POST">
+        <div class="form-group">
+            {% csrf_token %}
+            {{ register_form|crispy}}
+            <div class="ps-5 mt-4">
+                <button class="btn btn-primary" type="submit">Registrar</button>
+            </div>
+        </div>
+    </form>
+    <p class="text-center mt-3">Si ya tiene cuenta, inicie sesión en <a href="{% url 'login' %}"
+            class="text-secondary text-decoration-none"> <b>Login</b> </a></p>
+    <div class="ps-3">
+        <h6>(*) Campo requerido</h6>
+    </div>
+</div>
+{% endblock content %}

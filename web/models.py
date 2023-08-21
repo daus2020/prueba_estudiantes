@@ -87,6 +87,9 @@ class PlanFormativo(models.Model):
         managed = False
         db_table = 'plan_formativo'
 
+    def __str__(self):
+        return self.descripcion
+
 
 class PlanModulo(models.Model):
     # The composite primary key (codigo_plan_formativo, codigo_modulo) found, that is not supported. The first column is selected.

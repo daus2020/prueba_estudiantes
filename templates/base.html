@@ -6,25 +6,102 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>EstudianteProfe</title>
+        <title>_EstudianteProfe</title>
         {% load bootstrap5 %}
         {% bootstrap_css %}
         {% bootstrap_javascript %}
         {% bootstrap_messages %}
+
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/dj_ico.ico' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cantarell:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+        <style>
+            body {
+                background-color: #192032;
+                opacity: 1;
+                background-image: linear-gradient(30deg, #0d1124 12%, transparent 12.5%, transparent 87%, #0d1124 87.5%, #0d1124), linear-gradient(150deg, #0d1124 12%, transparent 12.5%, transparent 87%, #0d1124 87.5%, #0d1124), linear-gradient(30deg, #0d1124 12%, transparent 12.5%, transparent 87%, #0d1124 87.5%, #0d1124), linear-gradient(150deg, #0d1124 12%, transparent 12.5%, transparent 87%, #0d1124 87.5%, #0d1124), linear-gradient(60deg, #0d112477 25%, transparent 25.5%, transparent 75%, #0d112477 75%, #0d112477), linear-gradient(60deg, #0d112477 25%, transparent 25.5%, transparent 75%, #0d112477 75%, #0d112477);
+                background-size: 14px 25px;
+                background-position: 0 0, 0 0, 7px 12px, 7px 12px, 0 0, 7px 12px;
+
+
+                color: aliceblue;
+                font-family: Cantarell, sans-serif;
+            }
+
+            h5,
+            h2,
+            th {
+                color: #f7920d !important;
+            }
+
+            #watermark {
+                top: 42%;
+                /* left: calc(50% - 50px); */
+                left: calc(50% - 145px);
+                position: fixed;
+                z-index: 10;
+                opacity: 10%;
+                filter: grayscale(100%);
+            }
+
+            .card {
+                background-color: #24242471 !important;
+                /* background-color: rgba(0, 0, 0, 0.85) !important; */
+                box-shadow: inset 1px 1px 22px 4px rgba(0, 0, 0, 0.85);
+                border-radius: 10px;
+                min-width: 500px;
+            }
+
+            select:hover option {
+                background-color: #00ffe5d8;
+                /* background-color: #ff4d00d8; */
+                /* Your desired hover background color */
+            }
+
+            select:focus option {
+                background-color: #ff990084;
+                /* Your desired hover background color */
+            }
+
+            select option:checked {
+                background-color: #f7920d;
+                /* Your desired active background color */
+            }
+
+            /* @media only screen and (min-height: 590px) {
+                body {
+                    overflow-x: hidden;
+                    overflow-y: hidden;
+                }
+            }
+
+            @media only screen and (max-height: 589px) {
+                body {
+                    overflow-x: hidden;
+                }
+            } */
+        </style>
     </head>
 
-    <body>
+    <body class="d-flex flex-column vh-100">
 
-        {% block nav %}
 
-        {% endblock nav %}
+        {% include "menu.html" %}
 
+        <img src="{% static 'images/estudiantes_logo.png' %}" alt="dj_cars watermark logo" id="watermark">
         <div class="mt-4 container">
             {% block content %}
             {% endblock content %}
         </div>
 
         {% block footer %}
+        {% include "footer.html" %}
         {% endblock footer %}
 
     </body>

@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from web.models import *
 
 # sex = (('','Seleccione Género'),('F','F'),('M','M'))
@@ -55,3 +57,27 @@ class MainForm(forms.Form):
 #                                              label="Región", widget=forms.Select(attrs={'class': 'form-select'}), required=False, empty_label="Elija una región")
 
 #    genero = forms.ChoiceField(choices = sex, label="Gender", widget=forms.Select(attrs={'class':'form-select'}), required=False)
+
+
+class RegistroUsuarioForm(UserCreationForm):
+    username = forms.CharField(
+        label='Nombre de Usuario'
+    )
+    email = forms.EmailField(label='Correo Electrónico', required=True)
+    password1 = forms.CharField(
+        label="Contraseña", widget=forms.PasswordInput
+    )
+    password2 = forms.CharField(
+        label="Confirmar Contraseña",  widget=forms.PasswordInput
+    )
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super(RegistroUsuarioForm, self).save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user
